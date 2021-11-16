@@ -9,7 +9,7 @@ import {
 
 const initialState = {
   userAuthToken: localStorage.getItem("usertoken"),
-  isAuthenticated: true,
+  isAuthenticated: false,
   user: null,
   errors: null,
   signupStatus: null,
