@@ -7,7 +7,7 @@ const UserPrivateRoute = () => {
   return user.isAuthenticated && user.userAuthToken != null ? (
     <Outlet />
   ) : (
-    <Navigate to="/login" />
+    <Navigate to="/signin" />
   );
 };
 export default UserPrivateRoute;
