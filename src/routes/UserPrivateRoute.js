@@ -4,10 +4,9 @@ import { useSelector } from "react-redux";
 
 const UserPrivateRoute = () => {
   const { user } = useSelector((state) => state);
-  return user.isAuthenticated && user.userAuthToken != null ? (
-    <Outlet />
-  ) : (
-    <Navigate to="/signin" />
-  );
+  if (!user?.isAuthenticated) {
+    return <Navigate to="/signin" />;
+  }
+  return <Outlet />;
 };
 export default UserPrivateRoute;

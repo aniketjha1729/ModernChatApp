@@ -1,20 +1,31 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Register from "./components/Register";
 import SignIn from "./components/SignIn";
 import Home from "./pages/Home";
 import UserPrivateRoute from "./routes/UserPrivateRoute";
+import { useDispatch } from "react-redux";
+import { setUserAuthToken } from "./utils/AuthToken";
+import { loadUserData } from "./redux/actions/user";
 
 const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (localStorage.usertoken) {
+      setUserAuthToken(localStorage.usertoken);
+      dispatch(loadUserData());
+    }
+  }, []);
+
   return (
     <Router>
       <Fragment>
         <Routes>
-          <Route path="/" element={<UserPrivateRoute />}>
-            <Route element={<Home />} />
-          </Route>
           <Route path="/signup" element={<Register />} />
           <Route path="/signin" element={<SignIn />} />
+          <Route element={<UserPrivateRoute />}>
+            <Route path="/" element={<Home />} />
+          </Route>
         </Routes>
       </Fragment>
     </Router>

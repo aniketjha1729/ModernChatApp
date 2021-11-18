@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { testAction, userRegister } from "../redux/actions/user";
+import { userRegister } from "../redux/actions/user";
 import "./css/register.css";
 
 const Register = () => {
