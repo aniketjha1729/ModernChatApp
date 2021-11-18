@@ -62,6 +62,4 @@ export const userLogin = (email, password) => async (dispatch) => {
   }
 };
 
-export const testAction = (email) => async () => {
-  console.log(email);
-};
+export const logout = () => ({ type: USER_LOGOUT });
