@@ -18,8 +18,9 @@ import {
   useTheme,
 } from "@material-ui/core";
 import { Inbox, Mail, Menu } from "@material-ui/icons";
+import { useSelector } from "react-redux";
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,11 +28,12 @@ const useStyles = makeStyles((theme) => ({
   },
   drawer: {
     [theme.breakpoints.up("sm")]: {
-      width: drawerWidth,
-      flexShrink: 0,
+      display: "none",
     },
   },
   appBar: {
+    display: "flex",
+    justifyContent: "space-between",
     zIndex: theme.zIndex.drawer + 1,
   },
   menuButton: {
@@ -45,11 +47,23 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     width: drawerWidth,
     background: "#3F51B5",
-    color:'#FFFFFF'
+    color: "#FFFFFF",
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
+  },
+  leftMenu: {
+    display: "flex",
+    justifyContent: "space-between",
+    width: 150,
+    cursor: "Pointer",
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
+  brandName: {
+    marginRight: theme.spacing(15),
   },
 }));
 
@@ -58,6 +72,7 @@ const Navbar = (props) => {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const { user } = useSelector((state) => state);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -95,7 +110,7 @@ const Navbar = (props) => {
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
+        <Toolbar className={classes.appBar}>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -105,9 +120,17 @@ const Navbar = (props) => {
           >
             <Menu />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            Responsive drawer
+          <Typography variant="h6" noWrap className={classes.brandName}>
+            EduHub Chat
           </Typography>
+          <div className={classes.leftMenu}>
+            <div>
+              <Typography variant="h6">Login</Typography>
+            </div>
+            <div>
+              <Typography variant="h6">SignUp</Typography>
+            </div>
+          </div>
         </Toolbar>
       </AppBar>
       <nav
@@ -145,38 +168,6 @@ const Navbar = (props) => {
           </Drawer>
         </Hidden>
       </nav>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        <Typography paragraph>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Rhoncus
-          dolor purus non enim praesent elementum facilisis leo vel. Risus at
-          ultrices mi tempus imperdiet. Semper risus in hendrerit gravida rutrum
-          quisque non tellus. Convallis convallis tellus id interdum velit
-          laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed
-          adipiscing. Amet nisl suscipit adipiscing bibendum est ultricies
-          integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate
-          eu scelerisque felis imperdiet proin fermentum leo. Mauris commodo
-          quis imperdiet massa tincidunt. Cras tincidunt lobortis feugiat
-          vivamus at augue. At augue eget arcu dictum varius duis at consectetur
-          lorem. Velit sed ullamcorper morbi tincidunt. Lorem donec massa sapien
-          faucibus et molestie ac.
-        </Typography>
-        <Typography paragraph>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-          ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar
-          elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse
-          sed nisi lacus sed viverra tellus. Purus sit amet volutpat consequat
-          mauris. Elementum eu facilisis sed odio morbi. Euismod lacinia at quis
-          risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas
-          purus viverra accumsan in. In hendrerit gravida rutrum quisque non
-          tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique
-          sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis
-          eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla
-          posuere sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
-      </main>
     </div>
   );
 };
