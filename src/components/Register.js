@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { userRegister } from "../redux/actions/user";
-import "./css/register.css";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -32,46 +31,7 @@ const Register = () => {
   };
 
   return (
-    <div className="login">
-      <div className="loginWrapper">
-        <div className="loginLeft">
-          <h3 className="loginLogo">EduHubChat</h3>
-          <span className="loginDesc">Connect with peers on EduHub.</span>
-        </div>
-        <div className="loginRight">
-          <div className="loginBox">
-            <form className="loginBox" onSubmit={onSubmit}>
-              <input
-                placeholder="Name"
-                className="loginInput"
-                name="name"
-                value={name}
-                onChange={onChange}
-              />
-              <input
-                placeholder="Email"
-                className="loginInput"
-                name="email"
-                value={email}
-                onChange={onChange}
-              />
-              <input
-                type="password"
-                placeholder="Password"
-                className="loginInput"
-                name="password"
-                value={password}
-                onChange={onChange}
-              />
-              <button type="submit" className="loginButton">
-                Sign Up
-              </button>
-              <button className="loginRegisterButton">Log into Account</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div></div>
   );
 };
 

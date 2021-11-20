@@ -7,6 +7,7 @@ import UserPrivateRoute from "./routes/UserPrivateRoute";
 import { useDispatch } from "react-redux";
 import { setUserAuthToken } from "./utils/AuthToken";
 import { loadUserData } from "./redux/actions/user";
+import Navbar from "./components/Navbar";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const App = () => {
   return (
     <Router>
       <Fragment>
+        <Navbar/>
         <Routes>
           <Route path="/signup" element={<Register />} />
           <Route path="/signin" element={<SignIn />} />
