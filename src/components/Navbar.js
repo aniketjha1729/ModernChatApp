@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useRoutes } from "react-router-dom";
 import {
   AppBar,
   CssBaseline,
@@ -16,24 +16,17 @@ import {
   Typography,
   useTheme,
 } from "@material-ui/core";
-import { Inbox, Mail, Menu } from "@material-ui/icons";
+import { Inbox, Menu, SettingsPower, Chat, Person } from "@material-ui/icons";
+
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/actions/user";
 const drawerWidth = 200;
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-  },
   drawer: {
     [theme.breakpoints.up("sm")]: {
       display: "none",
     },
-  },
-  appBar: {
-    display: "flex",
-    justifyContent: "space-between",
-    zIndex: theme.zIndex.drawer + 1,
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -41,21 +34,22 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
-  // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
     background: "#3F51B5",
     color: "#FFFFFF",
   },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
+  navContainer: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-between",
   },
   leftMenu: {
     display: "flex",
+
     justifyContent: "space-between",
-    width: 150,
+    width: "150px",
     cursor: "Pointer",
     [theme.breakpoints.down("sm")]: {
       display: "none",
@@ -74,6 +68,10 @@ const Navbar = (props) => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const { user } = useSelector((state) => state);
 
+  useEffect(() => {
+    console.log(user);
+  }, [user]);
+
   const logoutUser = () => {
     dispatch(logout());
   };
@@ -87,18 +85,32 @@ const Navbar = (props) => {
       <Divider />
       <List>
         {user.user ? (
-          <ListItem button>
-            <ListItemIcon>
-              <Inbox />
-            </ListItemIcon>
-            <Typography
-              variant="h6"
-              style={{ color: "white" }}
-              onClick={logoutUser}
-            >
-              Logout
-            </Typography>
-          </ListItem>
+          <>
+            <ListItem button>
+              <ListItemIcon>
+                <Inbox />
+              </ListItemIcon>
+              <Typography
+                variant="h6"
+                style={{ color: "white" }}
+                onClick={logoutUser}
+              >
+                Logout
+              </Typography>
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <Inbox />
+              </ListItemIcon>
+              <Typography
+                variant="h6"
+                style={{ color: "white" }}
+                onClick={logoutUser}
+              >
+                {user.user?.name}
+              </Typography>
+            </ListItem>
+          </>
         ) : (
           <>
             <ListItem button>
@@ -137,10 +149,10 @@ const Navbar = (props) => {
   const container =
     window !== undefined ? () => window().document.body : undefined;
   return (
-    <div className={classes.root}>
+    <div>
       <CssBaseline />
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar className={classes.appBar}>
+      <AppBar position="fixed">
+        <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
@@ -150,40 +162,44 @@ const Navbar = (props) => {
           >
             <Menu />
           </IconButton>
-          <Typography variant="h6" noWrap className={classes.brandName}>
-            EduHub Chat
-          </Typography>
-          <div className={classes.leftMenu}>
-            {!user.user ? (
-              <>
-                <div>
-                  <Link to="/signin" style={{ textDecoration: "none" }}>
-                    <Typography variant="h6" style={{ color: "white" }}>
-                      Login
-                    </Typography>
-                  </Link>
-                </div>
-                <div>
-                  <Link to="/signup" style={{ textDecoration: "none" }}>
-                    <Typography variant="h6" style={{ color: "white" }}>
-                      SignUp
-                    </Typography>
-                  </Link>
-                </div>
-              </>
-            ) : (
-              <>
-                <div>
-                  <Typography
-                    variant="h6"
-                    style={{ color: "white" }}
-                    onClick={logoutUser}
-                  >
-                    Logout
-                  </Typography>
-                </div>
-              </>
-            )}
+          <div className={classes.navContainer}>
+            <div>
+              <Typography variant="h6" noWrap className={classes.brandName}>
+                EduHub Chat
+              </Typography>
+            </div>
+            <div className={classes.leftMenu}>
+              {!user?.user ? (
+                <>
+                  <div>
+                    <Link to="/signin" style={{ textDecoration: "none" }}>
+                      <Typography variant="h6" style={{ color: "white" }}>
+                        Login
+                      </Typography>
+                    </Link>
+                  </div>
+                  <div>
+                    <Link to="/signup" style={{ textDecoration: "none" }}>
+                      <Typography variant="h6" style={{ color: "white" }}>
+                        SignUp
+                      </Typography>
+                    </Link>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div>
+                    <Person fontSize="large" />
+                  </div>
+                  <div>
+                    <Chat fontSize="large" />
+                  </div>
+                  <div>
+                    <SettingsPower onClick={logoutUser} fontSize="large" />
+                  </div>
+                </>
+              )}
+            </div>
           </div>
         </Toolbar>
       </AppBar>
