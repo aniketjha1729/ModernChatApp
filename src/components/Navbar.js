@@ -10,14 +10,21 @@ import {
   List,
   ListItem,
   ListItemIcon,
-  ListItemText,
+  TextField,
   makeStyles,
   Toolbar,
   Typography,
   useTheme,
+  Grid,
 } from "@material-ui/core";
-import { Inbox, Menu, SettingsPower, Chat, Person } from "@material-ui/icons";
-
+import {
+  Inbox,
+  Menu,
+  SettingsPower,
+  Chat,
+  Person,
+  Search,
+} from "@material-ui/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/actions/user";
 const drawerWidth = 200;
@@ -34,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
-  toolbar: theme.mixins.toolbar,
   drawerPaper: {
     width: drawerWidth,
     background: "#3F51B5",
@@ -45,18 +51,65 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "space-between",
   },
+  rightMenu: {
+    flex: "20%",
+    [theme.breakpoints.down("sm")]: {
+      flex: "0%",
+    },
+  },
   leftMenu: {
     display: "flex",
-
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
+    flex: "80%",
+    [theme.breakpoints.down("sm")]: {
+      flex: "100%",
+      justifyContent: "space-bewteen",
+    },
+  },
+  authContainer: {
+    display: "flex",
     width: "150px",
-    cursor: "Pointer",
+    justifyContent: "space-around",
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
   },
   brandName: {
     marginRight: theme.spacing(15),
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
+  },
+  mobileBrand: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "70px",
+  },
+  afterLoginContainer: {
+    display: "flex",
+    width: "100%",
+    justifyContent: "space-between",
+  },
+  userSettingContainer: {
+    display: "flex",
+    justifyContent: "space-around",
+    cursor: "pointer",
+    flex: "10%",
+   
+  },
+  userSearch: {
+    display: "flex",
+    flex: "70%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  searchInput: {
+    height: "30px",
+    width: "500px",
+    [theme.breakpoints.down("sm")]: {
+      width: "170px",
+    },
   },
 }));
 
@@ -80,34 +133,60 @@ const Navbar = (props) => {
     setMobileOpen(!mobileOpen);
   };
   const drawer = (
-    <div>
-      <div className={classes.toolbar} />
+    <div className={classes.drawerContainer}>
+      <div className={classes.mobileBrand}>
+        <h1>EduHub</h1>
+      </div>
       <Divider />
       <List>
         {user.user ? (
           <>
-            <ListItem button>
-              <ListItemIcon>
-                <Inbox />
+            <ListItem>
+              <ListItemIcon style={{ color: "white" }}>
+                <SettingsPower />
               </ListItemIcon>
-              <Typography
-                variant="h6"
-                style={{ color: "white" }}
-                onClick={logoutUser}
-              >
-                Logout
+              <Typography variant="h6" style={{ color: "white" }}>
+                Groups
               </Typography>
             </ListItem>
-            <ListItem button>
-              <ListItemIcon>
+            <ListItem>
+              <ListItemIcon style={{ color: "white" }}>
                 <Inbox />
               </ListItemIcon>
-              <Typography
-                variant="h6"
-                style={{ color: "white" }}
-                onClick={logoutUser}
-              >
-                {user.user?.name}
+              <Typography variant="h6" style={{ color: "white" }}>
+                People
+              </Typography>
+            </ListItem>
+            <ListItem>
+              <ListItemIcon style={{ color: "white" }}>
+                <SettingsPower />
+              </ListItemIcon>
+              <Typography variant="h6" style={{ color: "white" }}>
+                Groups
+              </Typography>
+            </ListItem>
+            <ListItem>
+              <ListItemIcon style={{ color: "white" }}>
+                <Inbox />
+              </ListItemIcon>
+              <Typography variant="h6" style={{ color: "white" }}>
+                People
+              </Typography>
+            </ListItem>
+            <ListItem>
+              <ListItemIcon style={{ color: "white" }}>
+                <SettingsPower />
+              </ListItemIcon>
+              <Typography variant="h6" style={{ color: "white" }}>
+                Groups
+              </Typography>
+            </ListItem>
+            <ListItem>
+              <ListItemIcon style={{ color: "white" }}>
+                <Inbox />
+              </ListItemIcon>
+              <Typography variant="h6" style={{ color: "white" }}>
+                People
               </Typography>
             </ListItem>
           </>
@@ -163,14 +242,14 @@ const Navbar = (props) => {
             <Menu />
           </IconButton>
           <div className={classes.navContainer}>
-            <div>
-              <Typography variant="h6" noWrap className={classes.brandName}>
-                EduHub Chat
+            <div className={classes.rightMenu}>
+              <Typography variant="h5" noWrap className={classes.brandName}>
+                EduHub
               </Typography>
             </div>
             <div className={classes.leftMenu}>
               {!user?.user ? (
-                <>
+                <div className={classes.authContainer}>
                   <div>
                     <Link to="/signin" style={{ textDecoration: "none" }}>
                       <Typography variant="h6" style={{ color: "white" }}>
@@ -185,19 +264,36 @@ const Navbar = (props) => {
                       </Typography>
                     </Link>
                   </div>
-                </>
+                </div>
               ) : (
-                <>
-                  <div>
-                    <Person fontSize="large" />
+                <div className={classes.afterLoginContainer}>
+                  <div className={classes.userSearch}>
+                    <form action="">
+                      <div style={{ display: "flex" }}>
+                        <div style={{ width: "100%" }}>
+                          <input type="text" className={classes.searchInput} />
+                        </div>
+                        <button style={{ height: "30px" }}>
+                          <Search />
+                        </button>
+                      </div>
+                    </form>
                   </div>
-                  <div>
-                    <Chat fontSize="large" />
+                  <div className={classes.userSettingContainer}>
+                    <div>
+                      <Person style={{ fontSize: "30px" }} />
+                    </div>
+                    <div>
+                      <Chat style={{ fontSize: "30px" }} />
+                    </div>
+                    <div>
+                      <SettingsPower
+                        onClick={logoutUser}
+                        style={{ fontSize: "30px" }}
+                      />
+                    </div>
                   </div>
-                  <div>
-                    <SettingsPower onClick={logoutUser} fontSize="large" />
-                  </div>
-                </>
+                </div>
               )}
             </div>
           </div>
