@@ -1,8 +1,33 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { userRegister } from "../redux/actions/user";
+import { makeStyles } from "@material-ui/core";
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    paddingTop: theme.spacing(8),
+  },
+  cardContainer: {
+    width: 200,
+    height: 200,
+    border: 1,
+    backgroundColor: "blue",
+    marginTop: 40,
+    marginLeft: 100,
+    position: "relative",
+  },
+  badge: {
+    width: "100px",
+    height: "100px",
+    backgroundColor: "limegreen",
+    position: "absolute",
+    bottom: "0px",
+    right: "-50px",
+  },
+}));
 
 const Register = () => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   // const { user } = useSelector((state) => state);
   // console.log(user);
@@ -31,7 +56,11 @@ const Register = () => {
   };
 
   return (
-    <div></div>
+    <div className={classes.container}>
+      <div className={classes.cardContainer}>
+        <div className={classes.badge}></div>
+      </div>
+    </div>
   );
 };
 

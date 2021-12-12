@@ -1,8 +1,7 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   AppBar,
-  Button,
-  Container,
   CssBaseline,
   Divider,
   Drawer,
@@ -18,8 +17,8 @@ import {
   useTheme,
 } from "@material-ui/core";
 import { Inbox, Mail, Menu } from "@material-ui/icons";
-import { useSelector } from "react-redux";
-
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../redux/actions/user";
 const drawerWidth = 200;
 
 const useStyles = makeStyles((theme) => ({
@@ -69,10 +68,15 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = (props) => {
   const { window } = props;
+  const dispatch = useDispatch();
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const { user } = useSelector((state) => state);
+
+  const logoutUser = () => {
+    dispatch(logout());
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -82,25 +86,51 @@ const Navbar = (props) => {
       <div className={classes.toolbar} />
       <Divider />
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem button key={text}>
+        {user.user ? (
+          <ListItem button>
             <ListItemIcon>
-              {index % 2 === 0 ? <Inbox /> : <Mail />}
+              <Inbox />
             </ListItemIcon>
-            <ListItemText primary={text} />
+            <Typography
+              variant="h6"
+              style={{ color: "white" }}
+              onClick={logoutUser}
+            >
+              Logout
+            </Typography>
           </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <Inbox /> : <Mail />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        ) : (
+          <>
+            <ListItem button>
+              <ListItemIcon>
+                <Inbox />
+              </ListItemIcon>
+              <Link to="/signin" style={{ textDecoration: "none" }}>
+                <Typography
+                  variant="h6"
+                  style={{ color: "white" }}
+                  onClick={handleDrawerToggle}
+                >
+                  Log In
+                </Typography>
+              </Link>
+            </ListItem>
+            <ListItem button>
+              <ListItemIcon>
+                <Inbox />
+              </ListItemIcon>
+              <Link to="/signup" style={{ textDecoration: "none" }}>
+                <Typography
+                  variant="h6"
+                  style={{ color: "white" }}
+                  onClick={handleDrawerToggle}
+                >
+                  Sign Up
+                </Typography>
+              </Link>
+            </ListItem>
+          </>
+        )}
       </List>
     </div>
   );
@@ -124,12 +154,36 @@ const Navbar = (props) => {
             EduHub Chat
           </Typography>
           <div className={classes.leftMenu}>
-            <div>
-              <Typography variant="h6">Login</Typography>
-            </div>
-            <div>
-              <Typography variant="h6">SignUp</Typography>
-            </div>
+            {!user.user ? (
+              <>
+                <div>
+                  <Link to="/signin" style={{ textDecoration: "none" }}>
+                    <Typography variant="h6" style={{ color: "white" }}>
+                      Login
+                    </Typography>
+                  </Link>
+                </div>
+                <div>
+                  <Link to="/signup" style={{ textDecoration: "none" }}>
+                    <Typography variant="h6" style={{ color: "white" }}>
+                      SignUp
+                    </Typography>
+                  </Link>
+                </div>
+              </>
+            ) : (
+              <>
+                <div>
+                  <Typography
+                    variant="h6"
+                    style={{ color: "white" }}
+                    onClick={logoutUser}
+                  >
+                    Logout
+                  </Typography>
+                </div>
+              </>
+            )}
           </div>
         </Toolbar>
       </AppBar>

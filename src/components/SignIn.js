@@ -39,9 +39,6 @@ const useStyles = makeStyles((theme) => ({
   signinIcon: {
     fontSize: "40px",
     marginLeft: "45%",
-    [theme.breakpoints.down("sm")]: {
-      marginLeft: "45%",
-    },
   },
   signinText: {
     fontSize: "25px",
@@ -58,22 +55,13 @@ const SignIn = () => {
   const [formData, setFormData] = useState({
     email: "aniket@gmail.com",
     password: "Aniket@1234",
+    showPassword: false,
   });
   const classes = useStyles();
   const { email, password } = formData;
-
-  const [values, setValues] = React.useState({
-    amount: "",
-    password: "",
-    weight: "",
-    weightRange: "",
-    showPassword: false,
-  });
   const handleClickShowPassword = () => {
-    setValues({ ...values, showPassword: !values.showPassword });
-  };
-  const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
+    console.log("helr");
+    setFormData({ ...formData, showPassword: !formData.showPassword });
   };
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
@@ -99,7 +87,10 @@ const SignIn = () => {
   return (
     <div className={classes.container}>
       <Grid container>
-        <Grid item sm={7}>
+        <Grid item sm={1}>
+          <div></div>
+        </Grid>
+        <Grid item sm={6}>
           <div className={classes.signImage}></div>
         </Grid>
         <Grid item sm={5} xs={12}>
@@ -108,13 +99,16 @@ const SignIn = () => {
             <Typography className={classes.signinText}>Log In</Typography>
           </Container>
           <Container>
-            <form action="">
+            <form onSubmit={onSubmit}>
               <div className={classes.formFields}>
                 <TextField
                   id="outlined-basic"
                   label="Email Address*"
                   variant="outlined"
                   fullWidth
+                  name="email"
+                  value={email}
+                  onChange={onChange}
                 />
               </div>
               <div className={classes.formFields}>
@@ -128,9 +122,10 @@ const SignIn = () => {
                   </InputLabel>
                   <OutlinedInput
                     id="outlined-adornment-password"
-                    type={values.showPassword ? "text" : "password"}
-                    value={values.password}
-                    onChange={handleChange("password")}
+                    type={formData.showPassword ? "text" : "password"}
+                    value={password}
+                    name="password"
+                    onChange={onChange}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
@@ -139,7 +134,7 @@ const SignIn = () => {
                           onMouseDown={handleMouseDownPassword}
                           edge="end"
                         >
-                          {values.showPassword ? (
+                          {formData.showPassword ? (
                             <Visibility />
                           ) : (
                             <VisibilityOff />
@@ -157,6 +152,7 @@ const SignIn = () => {
                   color="primary"
                   size="large"
                   fullWidth
+                  type="submit"
                 >
                   Log In
                 </Button>
