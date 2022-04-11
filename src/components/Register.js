@@ -29,8 +29,6 @@ const useStyles = makeStyles((theme) => ({
 const Register = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  // const { user } = useSelector((state) => state);
-  // console.log(user);
   const [formData, setFormData] = useState({
     email: "",
     password: "",

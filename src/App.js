@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Register from "./components/Register";
 import SignIn from "./components/SignIn";
-import Home from "./pages/Home";
+import FullWidthGrid from "./components/ReactGrid";
 import UserPrivateRoute from "./routes/UserPrivateRoute";
 import { useDispatch } from "react-redux";
 import { setUserAuthToken } from "./utils/AuthToken";
@@ -21,12 +21,12 @@ const App = () => {
   return (
     <Router>
       <Fragment>
-        <Navbar/>
+        <Navbar />
         <Routes>
           <Route path="/signup" element={<Register />} />
           <Route path="/signin" element={<SignIn />} />
           <Route element={<UserPrivateRoute />}>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<FullWidthGrid />} />
           </Route>
         </Routes>
       </Fragment>

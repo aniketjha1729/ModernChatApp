@@ -1,0 +1,13 @@
+.leftBodys {
+  display: "flex";
+  background-color: blue;
+  flex: -0%;
+  height: 94vh;
+  transition: 850ms;
+  z-index: 1000;
+}
+.leftBodys.leftBodyTemps {
+  background-color: rgb(110, 110, 173);
+  flex: 15%;
+  transition: 350ms;
+}
